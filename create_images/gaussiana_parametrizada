@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def generate_rotated_gaussian(mx, my, sx, sy, theta):
+    x = np.linspace(-5, 5, 400)
+    y = np.linspace(-5, 5, 400)
+    x, y = np.meshgrid(x, y)
+
+    # Rotação
+    x_rot = x * np.cos(theta) - y * np.sin(theta)
+    y_rot = x * np.sin(theta) + y * np.cos(theta)
+
+    # Função de distribuição normal (gaussiana)
+    gaussian = np.exp(-((x_rot - mx)**2 / (2 * sx**2) + (y_rot - my)**2 / (2 * sy**2)))
+
+    return gaussian
+
+# Gerar gaussiana com parâmetros opcionais
+gaussian_rotated = generate_rotated_gaussian(mx=0, my=0, sx=1, sy=2, theta=np.pi/4)
+
+# Exibir a imagem
+plt.imshow(gaussian_rotated, cmap='viridis', origin='lower', extent=[-5, 5, -5, 5])
+plt.title('Gaussiana Rotacionada')
+plt.colorbar()
+plt.show()
